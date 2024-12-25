@@ -10,6 +10,8 @@ class SignInError extends SignInState {
   SignInError(this.message);
 }
 
+class SignInSuccess extends SignInState {}
+
 
 class NextTabBarPageState extends SignInState {}
 

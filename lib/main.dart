@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Personal Training',
             theme: ThemeData(
-              textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black45)),
+              textTheme: TextTheme(
+                  bodyMedium: TextStyle(color: Colors.black)),
               fontFamily: 'Raleway',
               scaffoldBackgroundColor: Colors.white,
             ),

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_training/core/const/color_constant.dart';
+import 'package:personal_training/screens/detail_training/detail_training.dart';
 import 'package:personal_training/screens/home/bloc/home_cubit.dart';
 import 'package:personal_training/screens/home/bloc/home_state.dart';
 import 'package:personal_training/screens/home/workout_card.dart';
@@ -208,7 +209,7 @@ class HomePage extends StatelessWidget {
           color: ColorConstant.cardioColor,
           workout: DataConstant.homeWorkouts[0],
           onTap: () {
-
+            Navigator.pushNamed(context, DetailTraining.id);
           },),
         // Container(
         //   height: 160,

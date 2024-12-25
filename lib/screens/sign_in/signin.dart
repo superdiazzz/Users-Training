@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_training/screens/commons/toast_helper.dart';
+import 'package:personal_training/screens/home/home.dart';
 import 'package:personal_training/screens/sign_in/bloc/signin_cubit.dart';
 import 'package:personal_training/screens/sign_in/bloc/signin_state.dart';
 import 'package:personal_training/screens/sign_up/signup.dart';
@@ -29,7 +31,12 @@ class SigninPage extends StatelessWidget {
       create: (context) => SignInCubit(),
       child: BlocConsumer<SignInCubit, SignInState>(
         listener: (context, state) {
-
+          if(state is SignInSuccess){
+            Navigator.pushReplacementNamed(context, HomePage.id);
+          }
+          else if(state is SignInError){
+            ToastHelper.showError(description: state.message);
+          }
         },
         builder: (context, state) {
           return SignInContent();
@@ -128,6 +135,7 @@ class SignInContent extends StatelessWidget {
               errorText: TextConstant.emailErrorText,
               isError: state is SignInError ? !ValidationService.email(bloc.emailController.text) : false,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 //bloc.add(OnTextChangeEvent());
               },
             ),
@@ -140,6 +148,7 @@ class SignInContent extends StatelessWidget {
               isError: state is SignInError ? !ValidationService.password(bloc.passwordController.text) : false,
               obscureText: true,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 // bloc.add(OnTextChangeEvent());
               },
             ),
@@ -180,9 +189,10 @@ class SignInContent extends StatelessWidget {
           return FitnessButton(
             title: TextConstant.signIn,
             isEnabled: state is SignInButtonEnableChangedState ? state.isEnabled : false,
-            onTap: () {
+            onTap: () async{
               FocusScope.of(context).unfocus();
               //bloc.add(SignInTappedEvent());
+              await bloc.sigin();
             },
           );
         },

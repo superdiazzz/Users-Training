@@ -65,6 +65,7 @@ flutter:
     - assets/icons/
     - assets/illustration/
     - assets/images/
+    - assets/video/
 
 fonts:
   - family: Raleway

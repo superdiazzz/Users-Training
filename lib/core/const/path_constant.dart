@@ -18,14 +18,14 @@ class PathConstant {
   static const String finished = 'assets/images/home/finished.png';
   static const String inProgress = 'assets/icons/home/inProgress.png';
   static const String timeSent = 'assets/icons/home/time.png';
-  static const String cardio = 'assets/images/home/cardio.png';
+  static const String cardio = 'assets/images/pullup.jpeg';
   static const String arms = 'assets/images/home/arms.png';
   static const String progress = 'assets/icons/home/progress.png';
 
   // Workout Details
   static const String yogaWorkout = 'assets/images/workouts/yoga_workout.png';
-  static const String back = 'assets/icons/workouts/back.png';
-  static const String rectangle = 'assets/icons/workouts/rectangle.png';
+  static const String back = 'assets/icons/back.png';
+  static const String rectangle = 'assets/icons/rectangle.png';
   static const String timeTracker = 'assets/icons/workouts/time.png';
   static const String exerciseTracker = 'assets/icons/workouts/exercise.png';
 
@@ -45,5 +45,5 @@ class PathConstant {
   // Start workout -> Yoga
   static const String recliningVideo = 'assets/videos/workouts/reclining.mp4';
   static const String cowPoseVideo = 'assets/videos/workouts/cow.mp4';
-  static const String warriorIIVideo = 'assets/videos/workouts/warriorII.mp4';
+  static const String warriorIIVideo = 'assets/videos/workouts/warrior.mp4';
 }
