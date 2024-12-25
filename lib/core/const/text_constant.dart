@@ -56,7 +56,7 @@ class TextConstant {
   static const String timeSent = "Time sent";
   static const String minutes = "Minutes";
 
-  static const String discoverWorkouts = "Discover new workouts";
+  static const String discoverWorkouts = "Daily Training For You";
 
   static const String keepProgress = "Keep the progress!";
   static const String profileSuccessful = "You are more successful than 88% users.";

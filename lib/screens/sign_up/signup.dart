@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_training/screens/commons/toast_helper.dart';
+import 'package:personal_training/screens/home/home.dart';
 import 'package:personal_training/screens/sign_in/signin.dart';
 import 'package:personal_training/screens/sign_up/bloc/signup_cubit.dart';
 import 'package:personal_training/screens/sign_up/bloc/signup_state.dart';
@@ -29,7 +31,12 @@ class SignupPage extends StatelessWidget {
       create: (context) => SignUpCubit(),
       child: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
-          
+          if(state is SignUpSuccess){
+            Navigator.pushReplacementNamed(context, HomePage.id);
+          }
+          else if(state is SignUpError){
+            ToastHelper.showError(description: "${state.message}");
+          }
         },
         builder: (context, state) {
           return SignUpContent();
@@ -121,6 +128,7 @@ class SignUpContent extends StatelessWidget {
               errorText: TextConstant.usernameErrorText,
               isError: state is SignUpError ? !ValidationService.username(bloc.userNameController.text) : false,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 // bloc.add(OnTextChangedEvent());
               },
             ),
@@ -134,6 +142,7 @@ class SignUpContent extends StatelessWidget {
               errorText: TextConstant.emailErrorText,
               isError: state is SignUpError ? !ValidationService.email(bloc.emailController.text) : false,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 // bloc.add(OnTextChangedEvent());
               },
             ),
@@ -147,6 +156,7 @@ class SignUpContent extends StatelessWidget {
               controller: bloc.passwordController,
               errorText: TextConstant.passwordErrorText,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 // bloc.add(OnTextChangedEvent());
               },
             ),
@@ -159,6 +169,7 @@ class SignUpContent extends StatelessWidget {
               controller: bloc.confirmPasswordController,
               errorText: TextConstant.confirmPasswordErrorText,
               onTextChanged: () {
+                bloc.onTextChangedEvent();
                 // bloc.add(OnTextChangedEvent());
               },
             ),
@@ -177,9 +188,10 @@ class SignUpContent extends StatelessWidget {
         builder: (context, state) {
           return FitnessButton(
             title: TextConstant.signUp,
-            // isEnabled: state is SignUpButtonEnableChangedState ? state.isEnabled : false,
-            onTap: () {
+            isEnabled: state is SignUpButtonEnableChangedState ? state.isEnabled : false,
+            onTap: () async {
               FocusScope.of(context).unfocus();
+              await bloc.signUp();
               // bloc.add(SignUpTappedEvent());
             },
           );

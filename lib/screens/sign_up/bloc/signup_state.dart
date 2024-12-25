@@ -9,6 +9,11 @@ class SignUpError extends SignUpState {
   SignUpError(this.message);
 }
 
+class SignUpSuccess extends SignUpState {}
+
 class NextTabBarPageState extends SignUpState {}
 
-class SignUpButtonEnableChangedState extends SignUpState {}
+class SignUpButtonEnableChangedState extends SignUpState {
+  bool isEnabled;
+  SignUpButtonEnableChangedState(this.isEnabled);
+}

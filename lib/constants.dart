@@ -15,3 +15,5 @@ const Color whileColor40 = Color(0xFF666666);
 const Color whileColor20 = Color(0xFF333333);
 const Color whileColor10 = Color(0xFF191919);
 const Color whileColor5 = Color(0xFF0D0D0D);
+
+final List<String> buttonLabels = ['Running', 'Running', 'Running', 'Running', 'Running'];

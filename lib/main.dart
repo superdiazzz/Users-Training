@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_training/firebase_options.dart';
 import 'package:personal_training/repositories/apps_repository.dart';
+import 'package:personal_training/screens/home/home.dart';
 import 'package:personal_training/screens/sign_in/signin.dart';
 import 'package:personal_training/screens/welcome/welcome.dart';
 import 'package:toastification/toastification.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Raleway',
               scaffoldBackgroundColor: Colors.white,
             ),
-            initialRoute: SigninPage.id,
+            initialRoute: HomePage.id,
             onGenerateRoute: router.generateRoute,
           )
       )
