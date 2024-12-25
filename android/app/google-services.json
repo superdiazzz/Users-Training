@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "366965109227",
+    "project_id": "personal-training-bdd87",
+    "storage_bucket": "personal-training-bdd87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366965109227:android:9d8cbd013d04b27b6de9ae",
+        "android_client_info": {
+          "package_name": "com.personaltraining.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNYPsBsxCsCQcZNLopQxvJdwj7X5WC-tE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
