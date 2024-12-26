@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_training/constants.dart';
 
 import '../../core/const/color_constant.dart';
 import '../../core/const/path_constant.dart';
@@ -64,7 +65,7 @@ class WorkoutDetailsBody extends StatelessWidget {
               vertical: 6,
             ),
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
+              color: successColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(

@@ -31,9 +31,10 @@ class DataConstant {
         title: TextConstant.yogaTitle,
         exercices: TextConstant.yogaExercises,
         minutes: TextConstant.yogaMinutes,
-        currentProgress: 10,
+        currentProgress: 1,
         progress: 16,
         image: PathConstant.yoga,
+        level: 'Super Easy',
         exerciseDataList: [
           ExerciseData(
             title: TextConstant.reclining,
@@ -72,6 +73,7 @@ class DataConstant {
         exercices: TextConstant.pilatesExercises,
         minutes: TextConstant.pilatesMinutes,
         currentProgress: 1,
+        level: 'Medium',
         progress: 20,
         image: PathConstant.pilates,
         exerciseDataList: [
@@ -106,6 +108,7 @@ class DataConstant {
         minutes: TextConstant.fullBodyMinutes,
         currentProgress: 12,
         progress: 14,
+        level: 'Medium',
         image: PathConstant.fullBody,
         exerciseDataList: [
           ExerciseData(
@@ -139,6 +142,7 @@ class DataConstant {
       minutes: TextConstant.stretchingMinutes,
       currentProgress: 0,
       progress: 8,
+      level: 'Hard',
       image: PathConstant.stretching,
       exerciseDataList: [
         ExerciseData(
@@ -176,6 +180,7 @@ class DataConstant {
         minutes: TextConstant.cardioMinutes,
         currentProgress: 10,
         progress: 16,
+        level: 'Hard',
         image: PathConstant.cardio,
         exerciseDataList: [
           ExerciseData(
@@ -216,6 +221,7 @@ class DataConstant {
         minutes: TextConstant.armsMinutes,
         currentProgress: 1,
         progress: 20,
+        level: 'Super Easy',
         image: PathConstant.cardio,
         exerciseDataList: [
           ExerciseData(

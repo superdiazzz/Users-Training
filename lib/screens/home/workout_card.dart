@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:personal_training/constants.dart';
 
 import '../../core/const/color_constant.dart';
 import '../../core/const/text_constant.dart';
@@ -57,10 +58,10 @@ class WorkoutCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: successColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Super Easy',
                       style: TextStyle(
                         fontSize: 12,

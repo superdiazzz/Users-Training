@@ -8,6 +8,7 @@ class WorkoutData{
   final int currentProgress;
   final int progress;
   final String image;
+  final String level;
   final List<ExerciseData> exerciseDataList;
 
   WorkoutData({
@@ -17,6 +18,7 @@ class WorkoutData{
     required this.currentProgress,
     required this.progress,
     required this.image,
+    required this.level,
     required this.exerciseDataList,
   });
 

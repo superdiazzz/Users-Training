@@ -48,7 +48,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            workout.title + "  " + TextConstant.workout,
+            'Beginner Hit Work For You',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
