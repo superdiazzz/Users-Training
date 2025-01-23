@@ -1,6 +1,6 @@
-# personal_training
+# list users
 
-A project to help you healty
+A project to add new users
 
 ## Getting Started
 

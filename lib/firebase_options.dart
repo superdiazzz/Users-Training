@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'personal-training-bdd87.firebasestorage.app',
     iosBundleId: 'com.zulhijananda.personalTraining',
   );
+
 }

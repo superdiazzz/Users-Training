@@ -19,9 +19,15 @@ class SignUpCubit extends Cubit<SignUpState>{
   Future<void> signUp() async {
     if(checkValidatorsOfTextField()){
 
-      emit(SignUpLoading());
-      await AuthService.signUp(emailController.text, passwordController.text, userNameController.text);
-      emit(SignUpSuccess());
+      try{
+
+        emit(SignUpLoading());
+        await AuthService.signUp(emailController.text, passwordController.text, userNameController.text);
+        emit(SignUpSuccess());
+
+      }catch(e){
+        emit(SignUpError('$e'));
+      }
     }else{
       emit(SignUpError('Input tidak valid'));
     }

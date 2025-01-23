@@ -12,13 +12,37 @@ import 'package:personal_training/screens/commons/toast_helper.dart';
 import 'package:personal_training/screens/home/bloc/home_cubit.dart';
 import 'package:personal_training/screens/home/bloc/home_state.dart';
 import 'package:personal_training/screens/home/edit_user_status_modal.dart';
+import 'package:personal_training/screens/home/list_tile_user.dart';
 
 import '../../core/const/text_constant.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   static const String id = "home";
+
+  final List<String> contacts = [
+    'Gerald Abbott',
+    'Addie Harrington',
+    'Chris Weaver',
+    'Susan Clayton',
+    'Eric Joseph',
+    'Millie Haynes',
+    'Floyd Drake',
+    'Lester Tran',
+  ];
+
+  final List<String> images = [
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +64,14 @@ class HomePage extends StatelessWidget {
             },
             builder: (context, state) {
               return SafeArea(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
                   children: [
                     if(state is HomeGetUser)
                     _createProfileData(context, state.user!, state.uStatus, state.profileUrl),
                     const SizedBox(height: 16),
-                    // _createExercisesList(context, DataConstant.workouts),
+                    Expanded(
+                      child: _createListUsers(context),
+                    ),
                     const SizedBox(height: 25),
                   ],
                 ),
@@ -54,6 +79,18 @@ class HomePage extends StatelessWidget {
             }
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _createListUsers(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ListView.builder(
+        itemCount: contacts.length,
+        itemBuilder: (context, index) {
+          return ListTileUser(image: images[index], name: contacts[index],);
+        },
       ),
     );
   }
@@ -91,6 +128,7 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Text("$photoUrl"),
                     Text(
                       'Hi, $displayName',
                       style: TextStyle(
@@ -106,69 +144,6 @@ class HomePage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('24/05/2024')
-                          ],
-                        ),
-                        SizedBox(
-                          width: 260,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(flex: 3, child: Text('DOB',)),
-                              Text(' : '),
-                              Expanded(flex: 3, child: Text('Lubuk Sikaping', overflow: TextOverflow.ellipsis,))
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 260,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(flex: 3, child: Text('Height',)),
-                              Text(' : '),
-                              Expanded(flex: 3, child: Text('${uStatus?.height ?? ''}', overflow: TextOverflow.ellipsis,))
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 260,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(flex: 3, child: Text('Weight',)),
-                              Text(' : '),
-                              Expanded(flex: 3, child: Text('${uStatus?.weight ?? ''}', overflow: TextOverflow.ellipsis,))
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 260,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(flex: 3, child: Text('Blood Type',)),
-                              Text(' : '),
-                              Expanded(flex: 3, child: Text('${uStatus?.blood ?? ''}', overflow: TextOverflow.ellipsis,))
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text('Body Mass Index',),
-                            Text('')
-                          ],
-                        )
-                      ],
-                    )
-
-
                   ],
                 ),
               ),
@@ -180,11 +155,20 @@ class HomePage extends StatelessWidget {
                                     radius: 60,
                                   ),
                     )
-                    : SizedBox(height: 80, width: 80,
-                      child: CircleAvatar(
-                      backgroundImage: FileImage(File(photoUrl)),
-                      radius: 60,),
-                ),
+                    : Stack(
+                  children: [
+                        SizedBox(height: 80, width: 80,
+                          child: CircleAvatar(
+                            backgroundImage: FileImage(File(photoUrl)),
+                            radius: 60,),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          right: 0,
+                          child: Icon(Icons.upload_rounded),
+                        )
+                      ],
+                    ),
                 onTap: () async {
                   // Handle avatar tap
                   await _pickImageFromGallery(context);

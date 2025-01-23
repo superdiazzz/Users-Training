@@ -1,16 +1,38 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../utils.dart';
 
 class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<User> signUp(String email, String password, String name) async {
-    UserCredential result = await auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
-    final User user = result.user!;
-    await user.updateDisplayName(name);
 
-    return user;
+    try{
+      UserCredential result = await auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
+      final User user = result.user!;
+      await user.updateDisplayName(name);
+
+      // TODO add new userto firestore
+      await _firestore.collection("users")
+          .doc(user.uid)
+          .set({
+        "name": user.displayName ?? Utils.getUsernameFromEmail(user.email!),
+        "email": user.email,
+        "avatar": user.photoURL ?? "",
+        "createdAt": FieldValue.serverTimestamp()
+      });
+
+      return user;
+    }catch(e){
+      print("error ->$e");
+      throw Exception("Kendala $e");
+    }
   }
+
+
 
   static Future resetPassword(String email) async {
     try {

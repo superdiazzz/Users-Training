@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:personal_training/screens/video_training/video_training.dart';
 
 import '../../core/const/color_constant.dart';
 import '../../core/const/path_constant.dart';
@@ -49,7 +48,7 @@ class ExerciseCell extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(40),
       onTap: () {
-        Navigator.pushNamed(context, VideoTraining.id);
+
       },
       child: Container(
         width: double.infinity,
