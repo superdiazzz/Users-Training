@@ -5,21 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:personal_training/core/const/color_constant.dart';
-import 'package:personal_training/models/category_model.dart';
 import 'package:personal_training/models/user_status_model.dart';
 import 'package:personal_training/repositories/apps_repository.dart';
 import 'package:personal_training/screens/commons/custom_modal_bottom_sheet.dart';
 import 'package:personal_training/screens/commons/toast_helper.dart';
-import 'package:personal_training/screens/detail_training/detail_training.dart';
 import 'package:personal_training/screens/home/bloc/home_cubit.dart';
 import 'package:personal_training/screens/home/bloc/home_state.dart';
 import 'package:personal_training/screens/home/edit_user_status_modal.dart';
-import 'package:personal_training/screens/home/workout_card.dart';
 
-import '../../constants.dart';
-import '../../core/const/data_constant.dart';
 import '../../core/const/text_constant.dart';
-import '../../models/workout_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -52,11 +46,7 @@ class HomePage extends StatelessWidget {
                     if(state is HomeGetUser)
                     _createProfileData(context, state.user!, state.uStatus, state.profileUrl),
                     const SizedBox(height: 16),
-                    _createCategoryList(context, (selectedCategory) {
-
-                    },),
-                    const SizedBox(height: 16),
-                    _createExercisesList(context, DataConstant.workouts),
+                    // _createExercisesList(context, DataConstant.workouts),
                     const SizedBox(height: 25),
                   ],
                 ),
@@ -215,101 +205,4 @@ class HomePage extends StatelessWidget {
     }
   }
 
-  Widget _createCategoryList(BuildContext context, Function(CategoryModel) onSelected ){
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Daily Training For You',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'More',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.blue,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          // Horizontal scrollable buttons
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: buttonLabels.map((label) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: label.color,
-                      side: const BorderSide(color: Colors.grey),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    onPressed: () {
-                      // Handle button press
-                      onSelected(label);
-                    },
-                    child: Text(
-                      label.title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _createExercisesList(BuildContext context, List<WorkoutData> lsWorkout) {
-    // return ListView.builder(
-    //   itemCount: lsWorkout.length,
-    //   itemBuilder: (context, index) {
-    //     final data = lsWorkout[index];
-    //     return WorkoutCard(
-    //       color: ColorConstant.cardioColor,
-    //       workout: data,
-    //       onTap: () {
-    //         Navigator.pushNamed(context, DetailTraining.id);
-    //       },
-    //     );
-    //   },
-    // );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-
-        WorkoutCard(
-          color: ColorConstant.cardioColor,
-          workout: DataConstant.homeWorkouts[0],
-          onTap: () {
-            Navigator.pushNamed(context, DetailTraining.id);
-          },),
-        WorkoutCard(
-          color: ColorConstant.cardioColor,
-          workout: DataConstant.homeWorkouts[1],
-          onTap: () {
-            Navigator.pushNamed(context, DetailTraining.id);
-          },),
-      ],
-    );
-  }
 }

@@ -28,14 +28,14 @@ class MyApp extends StatelessWidget {
       ],
       child: ToastificationWrapper(
           child: MaterialApp(
-            title: 'Personal Training',
+            title: 'Daftar User Training',
             theme: ThemeData(
               textTheme: TextTheme(
                   bodyMedium: TextStyle(color: Colors.black)),
               fontFamily: 'Raleway',
               scaffoldBackgroundColor: Colors.white,
             ),
-            initialRoute: HomePage.id,
+            initialRoute: SigninPage.id,
             onGenerateRoute: router.generateRoute,
           )
       )

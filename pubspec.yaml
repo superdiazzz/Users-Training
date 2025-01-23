@@ -53,6 +53,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   chewie: ^1.8.5
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:
