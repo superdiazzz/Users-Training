@@ -5,11 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:personal_training/core/const/color_constant.dart';
 import 'package:personal_training/models/UserModel.dart';
 import 'package:personal_training/repositories/apps_repository.dart';
-import 'package:personal_training/screens/commons/custom_modal_bottom_sheet.dart';
 import 'package:personal_training/screens/commons/toast_helper.dart';
+import 'package:personal_training/screens/detail/detail.dart';
 import 'package:personal_training/screens/home/bloc/home_cubit.dart';
 import 'package:personal_training/screens/home/bloc/home_state.dart';
-import 'package:personal_training/screens/home/edit_user_status_modal.dart';
 import 'package:personal_training/screens/home/list_tile_user.dart';
 import 'package:personal_training/screens/home/user_card.dart';
 import 'package:personal_training/screens/profile/profile.dart';
@@ -23,6 +22,7 @@ class HomePage extends StatelessWidget {
 
   List<UserModel>? users;
   UserModel? userDetail;
+  TextEditingController inputTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +48,47 @@ class HomePage extends StatelessWidget {
               else if(state is HomeListUsers){
                 users = state.lsUser;
               }
+              else if(state is HomeFilter){
+                users = state.users;
+              }
             },
             builder: (context, state) {
               return SafeArea(
                 child: Column(
                   children: [
                     if(userDetail != null)
-                    UserCard(userDetail: userDetail!, showUpload: false, onpress: () {
+                    UserCard(
+                      userDetail: userDetail!,
+                      showDescription: true,
+                      showUpload: false, onpress: () {
                       Navigator.pushNamed(context, ProfilePage.id);
                     },),
                     //_createProfileData(context, userDetail!),
                     const SizedBox(height: 16),
+                    if(users != null)
+                      Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TextField(
+                        controller: inputTextController,
+                        textInputAction: TextInputAction.search,
+                        decoration: InputDecoration(
+                            hintText: 'Cari User...',
+                            prefixIcon: const Icon(Icons.search, color: Colors.grey,),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: Colors.grey)
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: Colors.grey.shade300)
+                            )
+                        ),
+                        onSubmitted: (value) {
+                          context.read<HomeCubit>().filterText(value);
+                        },
+                      ),
+                    ),
                     if(users != null)
                     Expanded(
                       child: _createListUsers(context, users!),
@@ -80,7 +110,12 @@ class HomePage extends StatelessWidget {
       child: ListView.builder(
         itemCount: users.length,
         itemBuilder: (context, index) {
-          return ListTileUser(image: users[index].avatar?? "", name: users[index].name??"",);
+          return ListTileUser(
+            onpress: () {
+              Navigator.pushNamed(context, DetailPage.id, arguments: users[index].id);
+            },
+            image: users[index].avatar?? "",
+            name: users[index].name??"",);
         },
       ),
     );

@@ -11,12 +11,14 @@ class UserCard extends StatelessWidget {
   final VoidCallback onpress;
   final File? imageFile;
   final bool showUpload;
+  final bool showDescription;
 
   UserCard({super.key,
     required this.userDetail,
     required this.onpress,
     required this.showUpload,
-    this.imageFile
+    this.imageFile,
+    required this.showDescription
   });
 
   @override
@@ -50,6 +52,10 @@ class UserCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
+                    if(showUpload)
+                    Text(userDetail.email ?? '-'),
+                    const SizedBox(height: 2),
+                    if(showDescription)
                     Text(
                       TextConstant.checkActivity,
                       style: TextStyle(

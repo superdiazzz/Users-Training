@@ -30,28 +30,21 @@ class HomeCubit extends Cubit<HomeState>{
     }
   }
 
+  Future<void> filterText(String qry) async {
+
+    try{
+      final list = await _appsRepository.getFilterUsers(qry);
+      emit(HomeFilter(list));
+    }catch(e){
+      emit(HomeError('Terjadi kendala filter: $e'));
+    }
+
+  }
 
   Future<void> getCurrentUser() async {
     emit(HomeLoading());
 
     loginUser = _auth.currentUser;
-
-    //String? storedData = await _appsRepository.getStatus();
-
-    // Check if data exists
-    // UserStatusModel? st;
-    // if (storedData != null) {
-    //   print('isi data $storedData');
-    //   try{
-    //     var dt = jsonDecode(storedData);
-    //     st = UserStatusModel(dt['height'].toString(), dt['weight'].toString(), dt['blood']);
-    //   }catch(e){
-    //     print('isu konversi $e');
-    //   }
-    // }
-    //
-    // String? imagePath = await _appsRepository.getImage();
-
     try{
 
       final userDetail = await _appsRepository.getUserDetail();

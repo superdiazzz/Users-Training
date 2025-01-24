@@ -28,7 +28,7 @@ Route<dynamic> generateRoute(RouteSettings settings){
       );
     case DetailPage.id:
       return MaterialPageRoute(
-        builder: (context) => DetailPage(),
+        builder: (context) => DetailPage(idUser: settings.arguments as String,),
       );
     case ForgetPage.id:
       return MaterialPageRoute(

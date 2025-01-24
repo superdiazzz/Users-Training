@@ -13,6 +13,11 @@ class HomeError extends HomeState {
   HomeError(this.message);
 }
 
+class HomeFilter extends HomeState {
+  List<UserModel> users;
+  HomeFilter(this.users);
+}
+
 class HomeListUsers extends HomeState {
   List<UserModel> lsUser;
   HomeListUsers(this.lsUser);

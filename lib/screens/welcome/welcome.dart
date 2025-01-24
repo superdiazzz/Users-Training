@@ -32,7 +32,10 @@ class WelcomePage extends StatelessWidget {
           },
           builder: (context, state) {
             return SafeArea(
-              child: Center(child: Text('User\'s Training \n App!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),)),
+              child: Center(child: Text(
+                'User\'s Training \n App!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),)),
             );
           }
         ),

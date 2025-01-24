@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:personal_training/core/custom_dialog.dart';
 import 'package:personal_training/screens/commons/toast_helper.dart';
 import 'package:personal_training/screens/profile/bloc/profile_cubit.dart';
 import 'package:personal_training/screens/profile/bloc/profile_state.dart';
@@ -68,6 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           imageFile: imageFile,
                           userDetail: userDetail!,
                           showUpload: true,
+                          showDescription: true,
                           onpress: () async{
 
                           await _pickImageFromGallery(context);
@@ -88,7 +90,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             onPressed: () async {
+
+                              bool? result = await customDialog(
+                                  context,
+                                "Yakin ingin Logout?",
+                                "Apakah kamu yakin ingin logout akun ini?",
+                                "Iya"
+                              );
+                              if(result != null && context.mounted){
                                 context.read<ProfileCubit>().logout();
+                              }
                             },
                             child: Text('Logout', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                           ),

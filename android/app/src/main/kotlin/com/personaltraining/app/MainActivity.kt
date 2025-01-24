@@ -1,4 +1,4 @@
-package com.zulhijananda.personal_training
+package com.personaltraining.app
 
 import io.flutter.embedding.android.FlutterActivity
 

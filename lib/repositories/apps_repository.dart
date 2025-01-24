@@ -23,7 +23,7 @@ class AppsRepository{
           .get();
 
       if(qs.exists){
-        return UserModel.fromJson(qs.data()!);
+        return UserModel.fromJson(qs.data()!, qs.id);
       }else{
         throw Exception('user is not exists');
       }
@@ -37,7 +37,25 @@ class AppsRepository{
       final qs = await _firestore.collection('users').get();
 
       return qs.docs.map((doc) {
-        final user = UserModel.fromJson(doc.data());
+        final user = UserModel.fromJson(doc.data(), doc.id);
+        return user;
+      }).toList();
+
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  Future<List<UserModel>> getFilterUsers(String query) async {
+    try{
+
+      final qs = await _firestore.collection('users')
+            .where('name', isGreaterThanOrEqualTo: query)
+            .where('name', isLessThan: query.toLowerCase() + '\uf8ff')
+            .get();
+
+      return qs.docs.map((doc) {
+        final user = UserModel.fromJson(doc.data(), doc.id);
         return user;
       }).toList();
 
