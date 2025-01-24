@@ -1,6 +1,4 @@
 
-import 'exercise_model.dart';
-
 class WorkoutData{
   final String title;
   final String exercices;
@@ -9,7 +7,6 @@ class WorkoutData{
   final int progress;
   final String image;
   final String level;
-  final List<ExerciseData> exerciseDataList;
 
   WorkoutData({
     required this.title,
@@ -19,7 +16,6 @@ class WorkoutData{
     required this.progress,
     required this.image,
     required this.level,
-    required this.exerciseDataList,
   });
 
 }

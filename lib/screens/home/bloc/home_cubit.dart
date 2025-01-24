@@ -19,6 +19,16 @@ class HomeCubit extends Cubit<HomeState>{
   final weightController = TextEditingController();
   final bloodTypeController = TextEditingController();
 
+  Future<void> getListUser() async {
+    emit(HomeLoading());
+
+    try{
+      final list = await _appsRepository.getUsers();
+      emit(HomeListUsers(list));
+    }catch(e){
+      emit(HomeError('Terjadi kendala: $e'));
+    }
+  }
 
 
   Future<void> getCurrentUser() async {
@@ -26,23 +36,30 @@ class HomeCubit extends Cubit<HomeState>{
 
     loginUser = _auth.currentUser;
 
-    String? storedData = await _appsRepository.getStatus();
+    //String? storedData = await _appsRepository.getStatus();
 
     // Check if data exists
-    UserStatusModel? st;
-    if (storedData != null) {
-      print('isi data $storedData');
-      try{
-        var dt = jsonDecode(storedData);
-        st = UserStatusModel(dt['height'].toString(), dt['weight'].toString(), dt['blood']);
-      }catch(e){
-        print('isu konversi $e');
-      }
+    // UserStatusModel? st;
+    // if (storedData != null) {
+    //   print('isi data $storedData');
+    //   try{
+    //     var dt = jsonDecode(storedData);
+    //     st = UserStatusModel(dt['height'].toString(), dt['weight'].toString(), dt['blood']);
+    //   }catch(e){
+    //     print('isu konversi $e');
+    //   }
+    // }
+    //
+    // String? imagePath = await _appsRepository.getImage();
+
+    try{
+
+      final userDetail = await _appsRepository.getUserDetail();
+      emit(HomeCurrentUser(loginUser, userDetail));
+
+    }catch(e){
+      emit(HomeError('Terjadi kendala: $e'));
     }
-
-    String? imagePath = await _appsRepository.getImage();
-
-    emit(HomeGetUser(loginUser, st, imagePath));
   }
 
   Future<void> previewImage(String img) async{
@@ -51,19 +68,6 @@ class HomeCubit extends Cubit<HomeState>{
     emit(HomeImageSaved());
     await getCurrentUser();
   }
-
-  Future<void> saveStatus() async{
-    var dt = {
-      'height': heightController.text,
-      'weight' : weightController.text,
-      'blood' : bloodTypeController.text
-    };
-    _appsRepository.saveStatus(dt);
-
-    emit(HomeUpdateStatus());
-    await getCurrentUser();
-  }
-
 
   void filterData(String categName){
 

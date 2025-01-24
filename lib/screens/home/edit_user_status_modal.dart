@@ -97,7 +97,6 @@ class _EditUserStatusModalState extends State<EditUserStatusModal> {
               isEnabled: true,
               onTap: () async{
                 FocusScope.of(context).unfocus();
-                await widget.bloc.saveStatus();
                 if(context.mounted){
                   Navigator.pop(context);
                 }

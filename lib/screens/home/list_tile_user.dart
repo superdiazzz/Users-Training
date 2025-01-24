@@ -18,9 +18,12 @@ class ListTileUser extends StatelessWidget {
         children: [
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 16.0), // Adjust padding
-            leading: CircleAvatar(
+            leading: image != '' ? CircleAvatar(
               radius: 40,
               backgroundImage: NetworkImage(image),
+            ): CircleAvatar(
+              radius: 40,
+              backgroundImage: const AssetImage("assets/images/profile.png"),
             ),
             title: Text(
               name,

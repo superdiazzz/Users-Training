@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:personal_training/core/const/color_constant.dart';
-import 'package:personal_training/models/user_status_model.dart';
+import 'package:personal_training/models/UserModel.dart';
 import 'package:personal_training/repositories/apps_repository.dart';
 import 'package:personal_training/screens/commons/custom_modal_bottom_sheet.dart';
 import 'package:personal_training/screens/commons/toast_helper.dart';
@@ -13,6 +11,8 @@ import 'package:personal_training/screens/home/bloc/home_cubit.dart';
 import 'package:personal_training/screens/home/bloc/home_state.dart';
 import 'package:personal_training/screens/home/edit_user_status_modal.dart';
 import 'package:personal_training/screens/home/list_tile_user.dart';
+import 'package:personal_training/screens/home/user_card.dart';
+import 'package:personal_training/screens/profile/profile.dart';
 
 import '../../core/const/text_constant.dart';
 
@@ -21,35 +21,16 @@ class HomePage extends StatelessWidget {
 
   static const String id = "home";
 
-  final List<String> contacts = [
-    'Gerald Abbott',
-    'Addie Harrington',
-    'Chris Weaver',
-    'Susan Clayton',
-    'Eric Joseph',
-    'Millie Haynes',
-    'Floyd Drake',
-    'Lester Tran',
-  ];
-
-  final List<String> images = [
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-  ];
-
+  List<UserModel>? users;
+  UserModel? userDetail;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeCubit(FirebaseAuth.instance,
           RepositoryProvider.of<AppsRepository>(context)
-      )..getCurrentUser(),
+      )..getCurrentUser()
+      ..getListUser(),
       child: Scaffold(
         body: Container(
           color: ColorConstant.homeBackgroundColor,
@@ -58,19 +39,29 @@ class HomePage extends StatelessWidget {
               if(state is HomeUpdateStatus){
                 ToastHelper.showSuccess(description: 'Status User berhasil di Update');
               }
+              else if(state is HomeCurrentUser){
+                userDetail = state.userDetail;
+              }
               else if(state is HomeError){
                 ToastHelper.showError(description: 'Terjadi kesalahan ${state.message}');
+              }
+              else if(state is HomeListUsers){
+                users = state.lsUser;
               }
             },
             builder: (context, state) {
               return SafeArea(
                 child: Column(
                   children: [
-                    if(state is HomeGetUser)
-                    _createProfileData(context, state.user!, state.uStatus, state.profileUrl),
+                    if(userDetail != null)
+                    UserCard(userDetail: userDetail!, showUpload: false, onpress: () {
+                      Navigator.pushNamed(context, ProfilePage.id);
+                    },),
+                    //_createProfileData(context, userDetail!),
                     const SizedBox(height: 16),
+                    if(users != null)
                     Expanded(
-                      child: _createListUsers(context),
+                      child: _createListUsers(context, users!),
                     ),
                     const SizedBox(height: 25),
                   ],
@@ -83,13 +74,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _createListUsers(BuildContext context){
+  Widget _createListUsers(BuildContext context, List<UserModel> users){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.builder(
-        itemCount: contacts.length,
+        itemCount: users.length,
         itemBuilder: (context, index) {
-          return ListTileUser(image: images[index], name: contacts[index],);
+          return ListTileUser(image: users[index].avatar?? "", name: users[index].name??"",);
         },
       ),
     );
@@ -97,13 +88,11 @@ class HomePage extends StatelessWidget {
 
   Widget _createProfileData(
       BuildContext context,
-      User user,
-      UserStatusModel? uStatus,
-      String? photoUrl
+      UserModel userDetail
       ) {
     // final User? user = FirebaseAuth.instance.currentUser;
-    final bloc = BlocProvider.of<HomeCubit>(context);
-    final displayName = user.displayName ?? "No Username";
+    // final bloc = BlocProvider.of<HomeCubit>(context);
+    final displayName = userDetail.name ?? "No Username";
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Card(
@@ -119,11 +108,11 @@ class HomePage extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  customModalBottomSheet(
-                    context,
-                      height: MediaQuery.of(context).size.height * 0.65,
-                      child: EditUserStatusModal(bloc: bloc,)
-                  );
+                  // customModalBottomSheet(
+                  //   context,
+                  //     height: MediaQuery.of(context).size.height * 0.65,
+                  //     child: EditUserStatusModal(bloc: bloc,)
+                  // );
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,18 +137,27 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                child: (photoUrl == null || photoUrl.isEmpty)
-                    ? SizedBox(height: 80, width: 80,
+                child: (userDetail.avatar == null || userDetail.avatar!.isEmpty)
+                    ? Stack(
+                  children: [
+                    SizedBox(height: 80, width: 80,
                       child: CircleAvatar(
-                                    backgroundImage: const AssetImage("assets/images/profile.png"),
-                                    radius: 60,
-                                  ),
+                        backgroundImage: const AssetImage("assets/images/profile.png"),
+                        radius: 60,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 8,
+                      right: 0,
+                      child: Icon(Icons.upload_rounded),
+                    )
+                  ],
                     )
                     : Stack(
                   children: [
                         SizedBox(height: 80, width: 80,
                           child: CircleAvatar(
-                            backgroundImage: FileImage(File(photoUrl)),
+                            backgroundImage: NetworkImage(userDetail.avatar!),
                             radius: 60,),
                         ),
                         Positioned(

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Raleway',
               scaffoldBackgroundColor: Colors.white,
             ),
-            initialRoute: SigninPage.id, //HomePage.id,
+            initialRoute: WelcomePage.id,//HomePage.id, //SigninPage.id,
             onGenerateRoute: router.generateRoute,
           )
       )

@@ -8,6 +8,8 @@ class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  static const bool isLogin = false;
+
   static Future<User> signUp(String email, String password, String name) async {
 
     try{
@@ -24,6 +26,9 @@ class AuthService {
         "avatar": user.photoURL ?? "",
         "createdAt": FieldValue.serverTimestamp()
       });
+
+      // save status login
+
 
       return user;
     }catch(e){

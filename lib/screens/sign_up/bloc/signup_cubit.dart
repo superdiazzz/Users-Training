@@ -23,6 +23,7 @@ class SignUpCubit extends Cubit<SignUpState>{
 
         emit(SignUpLoading());
         await AuthService.signUp(emailController.text, passwordController.text, userNameController.text);
+
         emit(SignUpSuccess());
 
       }catch(e){

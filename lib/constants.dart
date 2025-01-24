@@ -1,8 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:personal_training/models/category_model.dart';
-
 const Color blackColor = Color(0xFF16161E);
 const Color blackColor80 = Color(0xFF45454B);
 const Color blackColor60 = Color(0xFF737378);
@@ -23,11 +21,5 @@ const Color successColor = Color(0xFF2ED573);
 const Color warningColor = Color(0xFFFFBE21);
 const Color errorColor = Color(0xFFEA5B5B);
 
-final List<CategoryModel> buttonLabels = [
-  CategoryModel('All', blackColor5),
-  CategoryModel('Super Easy', successColor),
-  CategoryModel('Medium', warningColor),
-  CategoryModel('Hard', errorColor)
-];
 
 
